@@ -11,7 +11,7 @@ struct TurmasView: View {
     @State var ModalConfigurar = false
     @State var ModalCriarEntrar = false
     @State var ModalCriarTurma = false
-    @State var PopupExcluirTurma = false
+    
     
     
     @State var  turmas: [Turma] = []
@@ -24,7 +24,7 @@ struct TurmasView: View {
         
         NavigationStack {
             VStack(alignment: .leading) {
-                // Título e Perfil
+                // Título e Botão de criar e entrar em turmas
                 HStack {
                     Text("Turmas")
                         .font(.system(size: 31, weight: .semibold))
@@ -90,7 +90,7 @@ struct TurmasView: View {
                                 }
                             }
                             .sheet(isPresented: $ModalConfigurar) {
-                                ModalConfigurarView(mostrarPopup: $PopupExcluirTurma)
+                                ModalConfigurarView()
                                     .presentationDetents([.fraction(0.205)])
                             }
                         }
@@ -98,9 +98,6 @@ struct TurmasView: View {
                 }
             }
         }
-        .overlay(
-            PopupExcluirTurma ? PopupExcluirTurmaView(mostrarPopup: $PopupExcluirTurma) : nil
-        )
         .overlay {
             if turmas.isEmpty {
                 ContentUnavailableView(label: {
