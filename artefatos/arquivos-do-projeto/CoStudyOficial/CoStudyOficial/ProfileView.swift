@@ -8,6 +8,12 @@ import SwiftUI
 
 struct ProfileView: View {
     var body: some View {
-        Text("Tela de Perfil")
+        ZStack {
+            Color(hex: "FFFBEF")
+                .ignoresSafeArea(.all)
+                .allowsHitTesting(false)
+            
+            Text("Tela de Perfil")
+        }
     }
 }

@@ -8,6 +8,11 @@ import SwiftUI
 
 struct EventosView: View {
     var body: some View {
-        Text("Tela de Eventos")
+        ZStack {
+            Color(hex: "FFFBEF")
+                .ignoresSafeArea(.all)
+                .allowsHitTesting(false)
+            Text("Tela de Eventos")
+        }
     }
 }

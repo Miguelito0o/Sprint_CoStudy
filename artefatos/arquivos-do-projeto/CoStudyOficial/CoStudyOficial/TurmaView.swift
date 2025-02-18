@@ -13,33 +13,37 @@ struct TurmaView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        
+        ZStack {
+            Color(hex: "FFFBEF")
+                .ignoresSafeArea(.all)
+                .allowsHitTesting(false)
+            
             Text("Codigo da turma:\(turma.codigo)")
             
-        
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(action: { dismiss() }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .foregroundStyle(Color(hex: "00504C"))
-                        Text("Turmas")
-                            .tint(Color(hex: "00504C"))
+            
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: { dismiss() }) {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                    .foregroundStyle(Color(hex: "00504C"))
+                                Text("Turmas")
+                                    .tint(Color(hex: "00504C"))
+                            }
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            
+                        }) {
+                            Label("", systemImage: "plus.square.fill")
+                                .font(.system(size: 48))
+                                .foregroundStyle(Color(hex: "00504C"))
+                        }
+                        .tint(Color(hex: "00504C"))
                     }
                 }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(action: {
-                    
-                }) {
-                    Label("", systemImage: "plus.square.fill")
-                        .font(.system(size: 48))
-                        .foregroundStyle(Color(hex: "00504C"))
-                }
-                .tint(Color(hex: "00504C"))
-            }
         }
     }
 }
-
