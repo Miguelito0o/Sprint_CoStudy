@@ -27,6 +27,7 @@ struct TurmasView: View {
     
     var body: some View {
         ZStack {
+            //"Filtro" amarelo
             Color(hex: "FFFBEF")
                 .ignoresSafeArea(.all)
                 .allowsHitTesting(false)
@@ -47,7 +48,7 @@ struct TurmasView: View {
                         }) {
                             Label("", systemImage: "plus.square.fill")
                                 .padding()
-                                .font(.system(size: 48))
+                                .font(.system(size: 40))
                                 .foregroundStyle(Color(hex: "00504C"))
                         }
                     }
@@ -63,7 +64,7 @@ struct TurmasView: View {
                 // Lista de turmas
                 ScrollView {
                     ForEach($turmas, id: \.id) { $turma in
-                        NavigationLink(destination: TurmaView(turma: turma)) {
+                        NavigationLink(destination: TurmaView(turma: $turma)) {
                             ZStack(alignment: .trailing) {
                                 HStack {
                                     Image(systemName: "person.2.fill")
@@ -93,18 +94,6 @@ struct TurmasView: View {
                                 .cornerRadius(10)
                                 .shadow(radius: 6)
                                 .padding(.horizontal)
-                                
-                                Section {
-                                    Button(action: {
-                                        turmaSelecionada = turma
-                                        ModalConfigurar = true
-                                    }) {
-                                        Label("", systemImage: "ellipsis.circle.fill")
-                                            .font(.system(size: 17))
-                                            .foregroundStyle(.white)
-                                            .padding(.trailing, 30)
-                                    }
-                                }
                                 .sheet(isPresented: $ModalConfigurar) {
                                     ModalConfigurarView(
                                         turma: $turma,
@@ -113,10 +102,15 @@ struct TurmasView: View {
                                     .presentationDetents([.fraction(0.3)])
                                 }
                             }
+                            .onLongPressGesture(minimumDuration: 1.0, perform: {
+                                            turmaSelecionada = turma
+                                            ModalConfigurar = true
+                                        })
                         }
                     }
                 }
             }
+            //Overlay para quando não houver turmas
             .overlay {
                 if turmas.isEmpty {
                     ContentUnavailableView(label: {
@@ -124,8 +118,9 @@ struct TurmasView: View {
                             Spacer()
                             Image(systemName: "arrow.turn.right.up")
                                 .foregroundStyle(Color(hex: "D1D1D1"))
-                                .font(.system(size: 40))
+                                .font(.system(size: 60))
                                 .offset(y: -180)
+                                .padding(.trailing, -15)
                         }
                         
                         Label {

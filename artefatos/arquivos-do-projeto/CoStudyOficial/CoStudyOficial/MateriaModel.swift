@@ -10,4 +10,5 @@ struct Materia: Identifiable {
     let id = UUID()
     let nome: String
     let topicos : [Topico]
+    var diaDaSemana : String
 }
