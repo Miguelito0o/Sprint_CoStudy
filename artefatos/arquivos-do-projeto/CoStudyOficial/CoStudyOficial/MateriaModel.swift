@@ -9,6 +9,6 @@ import SwiftUI
 struct Materia: Identifiable {
     let id = UUID()
     let nome: String
+    let responsavel : String
     let topicos : [Topico]
-    var diaDaSemana : String
 }

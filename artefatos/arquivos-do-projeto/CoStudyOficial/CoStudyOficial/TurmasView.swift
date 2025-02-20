@@ -65,7 +65,7 @@ struct TurmasView: View {
                 ScrollView {
                     ForEach($turmas, id: \.id) { $turma in
                         NavigationLink(destination: TurmaView(turma: $turma)) {
-                            ZStack(alignment: .trailing) {
+                            ZStack {
                                 HStack {
                                     Image(systemName: "person.2.fill")
                                         .foregroundStyle(.white)
@@ -100,6 +100,7 @@ struct TurmasView: View {
                                         removerTurma: { removerTurma(turmaSelecionada!) }
                                     )
                                     .presentationDetents([.fraction(0.3)])
+                                    .presentationDragIndicator(.visible)
                                 }
                             }
                             .onLongPressGesture(minimumDuration: 1.0, perform: {

@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+/*
 struct ModalCriarMateriaView : View {
     
     //Variáveis
@@ -63,6 +64,7 @@ struct ModalCriarMateriaView : View {
         }
     }
 }
+*/
 
 struct ModalCriacaoDeMateriaView : View {
     
@@ -70,15 +72,14 @@ struct ModalCriacaoDeMateriaView : View {
     @Binding var turma : Turma
     @State private var nomeMateria: String = ""
     @Environment(\.dismiss) var dismiss
-    @State private var diaSelecionado: String = ""
+    @State var responsavel = ""
     
     //Funções
     func adicionarMateria() {
-        let novaMateria = Materia(nome: nomeMateria, topicos: [], diaDaSemana: diaSelecionado)
+        let novaMateria = Materia(nome: nomeMateria, responsavel: responsavel, topicos: [])
         turma.materias.append(novaMateria)
         nomeMateria = ""
     }
-
     
     var body: some View {
         NavigationStack {
@@ -89,14 +90,15 @@ struct ModalCriacaoDeMateriaView : View {
                     TextField("Digite aqui", text: $nomeMateria)
                 }
                 Divider()
+                    .padding(.bottom, 16)
                 
-                Picker("Dia da Semana", selection: $diaSelecionado) {
-                            ForEach(["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"], id: \.self) {
-                                Text($0)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                
+                HStack {
+                    Text("Responsável pela matéria")
+                        .padding(.trailing, 16)
+                    TextField("Digite aqui", text: $responsavel)
+                }
+                Divider()
+
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Cancelar") {
@@ -114,5 +116,17 @@ struct ModalCriacaoDeMateriaView : View {
             }
             .padding(.horizontal, 16)
         }
+    }
+}
+
+struct ModalConfigurarMateriaView : View {
+    var body: some View {
+        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
+    }
+}
+
+struct ModalCriarTopicoView : View {
+    var body: some View {
+        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
     }
 }

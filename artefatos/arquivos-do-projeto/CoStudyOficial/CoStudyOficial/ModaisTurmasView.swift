@@ -301,6 +301,7 @@ struct ModalConfigurarView: View {
             .sheet(isPresented: $ModalEditarTurma) {
                 ModalEditarTurmaView(turma: $turma)
                     .presentationDetents([.fraction(0.32)])
+                    .presentationDragIndicator(.visible)
             }
         }
     }

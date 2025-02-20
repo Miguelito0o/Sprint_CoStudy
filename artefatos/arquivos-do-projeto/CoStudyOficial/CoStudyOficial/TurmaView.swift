@@ -10,17 +10,9 @@ struct TurmaView: View {
     
     @Binding var turma: Turma
     @State private var ModalCriarMateria = false
-    @State private var searchText = "" // Search state
+    @State var ModalConfigurarMateria = false
     
     @Environment(\.dismiss) var dismiss
-    
-    var materiasFiltradas : [Materia] {
-        if searchText.isEmpty {
-            return turma.materias
-        } else {
-            return turma.materias.filter { $0.nome.localizedCaseInsensitiveContains(searchText) }
-        }
-    }
     
     var body: some View {
         ZStack {
@@ -28,7 +20,8 @@ struct TurmaView: View {
                 .ignoresSafeArea(.all)
                 .allowsHitTesting(false)
             
-            VStack {
+            VStack(alignment: .leading) {
+               
                 VStack(alignment: .leading) {
                     Text("Matérias")
                         .font(.system(size: 31, weight: .semibold))
@@ -41,35 +34,48 @@ struct TurmaView: View {
                         .italic()
                 }
                 .padding(.top, 10)
-
-                // Search Bar
-                SearchBar(text: $searchText)
-                    .padding(.horizontal)
-
+                
+                
                 ScrollView {
-                    VStack(spacing: 10) {
-                        ForEach(materiasFiltradas.indices, id: \.self) { index in
-                            NavigationLink(destination: MateriaView(materia: $turma.materias[index])) {
-                                HStack {
-                                    Text(turma.materias[index].nome)
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
+                    LazyVStack {
+                        ForEach($turma.materias, id: \.id) { $materia in
+                            NavigationLink(destination: MateriaView(materia: $materia, turma: turma)) {
+                                ZStack {
+                                    VStack {
+                                        HStack {
+                                            Image(systemName: "book.fill")
+                                                .foregroundStyle(.white)
+                                                .font(.system(size: 45))
+                                            
+                                            VStack(alignment: .leading) {
+                                                Text(materia.nome)
+                                                    .font(.headline)
+                                                    .foregroundColor(.white)
+                                                    .padding(.top, 8)
+                                                
+                                                Text(materia.responsavel)
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.white)
+                                                    .padding(.bottom, 8)
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                        .padding()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .frame(height: 113)
+                                        .background(Color(hex: "227673"))
+                                        .cornerRadius(10)
+                                        .shadow(radius: 6)
+                                        .padding(.horizontal)
+                                    }
                                 }
-                                .padding()
-                                .background(Color.white)
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
                             }
                         }
                     }
-                    .padding()
                 }
+                
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -94,13 +100,23 @@ struct TurmaView: View {
                 }
             }
             .sheet(isPresented: $ModalCriarMateria) {
-                ModalCriarMateriaView(turma: $turma)
+                ModalCriacaoDeMateriaView(turma: $turma)
                     .presentationDetents([.fraction(0.2)])
+                    
             }
         }
         .overlay {
             if turma.materias.isEmpty {
                 ContentUnavailableView(label: {
+                    HStack {
+                        Spacer()
+                        
+                        Image(systemName: "arrow.turn.right.up")
+                            .foregroundStyle(Color(hex: "D1D1D1"))
+                            .font(.system(size: 60))
+                            .offset(y: -225)
+                            .padding(.trailing, -27)
+                    }
                     Label {
                         Text("Adicione uma matéria!")
                             .fontWeight(.regular)
@@ -110,6 +126,8 @@ struct TurmaView: View {
                             .scaledToFit()
                             .frame(width: 152, height: 115)
                             .foregroundColor(Color(hex: "D1D1D1"))
+                        
+                        
                     }
                 }, description: {
                     Text("Sem matérias por enquanto, tente adicionar uma!")
