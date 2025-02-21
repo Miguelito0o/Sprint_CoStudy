@@ -93,7 +93,7 @@ struct ModalCriacaoDeMateriaView : View {
                     .padding(.bottom, 16)
                 
                 HStack {
-                    Text("Responsável pela matéria")
+                    Text("Responsável")
                         .padding(.trailing, 16)
                     TextField("Digite aqui", text: $responsavel)
                 }
@@ -120,12 +120,6 @@ struct ModalCriacaoDeMateriaView : View {
 }
 
 struct ModalConfigurarMateriaView : View {
-    var body: some View {
-        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
-    }
-}
-
-struct ModalCriarTopicoView : View {
     var body: some View {
         /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
     }

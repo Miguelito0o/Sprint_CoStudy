@@ -39,7 +39,7 @@ struct TurmaView: View {
                 ScrollView {
                     LazyVStack {
                         ForEach($turma.materias, id: \.id) { $materia in
-                            NavigationLink(destination: MateriaView(materia: $materia, turma: turma)) {
+                            NavigationLink(destination: MateriaView(materia: $materia)) {
                                 ZStack {
                                     VStack {
                                         HStack {

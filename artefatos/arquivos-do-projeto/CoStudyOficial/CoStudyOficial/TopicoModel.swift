@@ -8,6 +8,6 @@ import SwiftUI
 
 struct Topico: Identifiable {
     let id = UUID()
-    let nome : String
-    let paginaDeConteudo : String
+    var nome : String
+    var conteudos : [Conteudo]
 }
