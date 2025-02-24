@@ -9,14 +9,10 @@ import SwiftUI
 struct MateriaView : View {
     
     @Binding var materia : Materia
-    @Binding var topico : Topico
-    @Binding var conteudo : Conteudo
     @State private var ModalCriarTopico = false
     @State private var ModalCriarConteudo = false
     @State private var novoTopicoNome = ""
     @State private var topicosEmExpansão: Set<UUID> = []
-    
-    
     
     @Environment(\.dismiss) var dismiss
     
