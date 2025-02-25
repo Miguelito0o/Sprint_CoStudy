@@ -6,25 +6,23 @@
 //
 import SwiftUI
 
-struct MateriaView : View {
-    
-    @Binding var materia : Materia
+struct MateriaView: View {
+    @Binding var materia: Materia
     @State private var ModalCriarTopico = false
+    @State private var indiceTopicoSelecionado: Int? = nil
     @State private var ModalCriarConteudo = false
-    @State private var novoTopicoNome = ""
-    @State private var topicosEmExpansão: Set<UUID> = []
+    @State private var topicosEmExpansao: Set<UUID> = []
     
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
-            //"Filtro" amarelo
             Color(hex: "FFFBEF")
                 .ignoresSafeArea(.all)
                 .allowsHitTesting(false)
             
             VStack {
-                //Título
+                // Título
                 HStack {
                     Text("Conteúdos")
                         .font(.system(size: 31, weight: .semibold))
@@ -35,29 +33,32 @@ struct MateriaView : View {
                 
                 ScrollView {
                     LazyVStack {
-                        ForEach(materia.topicos) { topico in
+                        ForEach($materia.topicos) { $topico in
                             VStack {
+                                // Cabeçalho do tópico
                                 HStack {
-                                    Text("\(topico.nome)")
+                                    Text(topico.nome)
                                     Spacer()
-                                    Image(systemName: "chevron.down")
+                                    Image(systemName: topicosEmExpansao.contains(topico.id) ? "chevron.up" : "chevron.down")
                                         .foregroundStyle(Color(hex: "00504C"))
                                 }
                                 .onTapGesture {
-                                    if topicosEmExpansão.contains(topico.id){
-                                        topicosEmExpansão.remove(topico.id)
-                                    }
-                                    else {
-                                        topicosEmExpansão.insert(topico.id)
+                                    if topicosEmExpansao.contains(topico.id) {
+                                        topicosEmExpansao.remove(topico.id)
+                                    } else {
+                                        topicosEmExpansao.insert(topico.id)
                                     }
                                 }
-                                Divider()
-                                    .padding(.bottom, 16)
                                 
-                                if topicosEmExpansão.contains(topico.id) {
+                                Divider().padding(.bottom, 8)
+                                
+                                // Se o tópico estiver expandido
+                                if topicosEmExpansao.contains(topico.id) {
                                     VStack(alignment: .leading) {
-                                        HStack{
+                                      
+                                        HStack {
                                             Button(action: {
+                                                indiceTopicoSelecionado = materia.topicos.firstIndex(where: { $0.id == topico.id })
                                                 ModalCriarConteudo = true
                                             }) {
                                                 Image(systemName: "plus.square.fill")
@@ -66,43 +67,55 @@ struct MateriaView : View {
                                                     .padding(.horizontal, 16)
                                             }
                                             Text("Adicionar Conteúdo")
-                                            .font(Font.custom("SF Pro", size: 15).weight(.bold))
-                                            .lineSpacing(22)
-                                            .foregroundStyle(Color(hex: "3C3C43"))
+                                                .font(.system(size: 15).bold())
+                                                .foregroundStyle(Color(hex: "3C3C43"))
                                         }
-                                        Divider()
-                                            .padding(.bottom, 16)
-                                        if !topico.conteudos.isEmpty {
-                                            ForEach(topico.conteudos) {_ in 
-                                                NavigationLink(destination: ConteudoView(topico: topico)) {
-                                                    HStack {
-                                                        Image(systemName: "document.fill")
-                                                            .foregroundStyle(Color(hex: "00504C"))
-                                                            .font(.system(size: 17))
-                                                            .padding(.horizontal, 16)
-                                                        Text("Nome de conteúdo")
-                                                    }
-                                                }
-                                            }
-                                        }
+                                        
+                                        Divider().padding(.bottom, 8)
+                                        
+                                        // Lista de conteúdos dentro do tópico
+                                        TopicosView(topico: $topico)
                                     }
-                                    .padding(.horizontal, 32)
+                                    .padding(.horizontal, 16)
                                 }
-                                
                             }
                             .padding(.horizontal, 16)
-                            .sheet(isPresented: $ModalCriarConteudo) {
-                                ModalCriarConteudoView()
-                                    .presentationDetents([.fraction(0.2)])
-                            }
                         }
                     }
                 }
-                
+                .overlay {
+                    if materia.topicos.isEmpty {
+                        ContentUnavailableView(label: {
+                            HStack {
+                                Spacer()
+                                Image(systemName: "arrow.turn.right.up")
+                                    .foregroundStyle(Color(hex: "D1D1D1"))
+                                    .font(.system(size: 60))
+                                    .offset(y: -240)
+                                    .padding(.trailing, -27)
+                            }
+                            Label {
+                                Text("Que tal adicionarmos um tópico?")
+                                    .fontWeight(.regular)
+                            } icon: {
+                                Image(systemName: "document.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 152, height: 115)
+                                    .foregroundColor(Color(hex: "D1D1D1"))
+                            }
+                        }, description: {
+                            Text("Clique no botão sinalizado para adicionar um novo tópico!")
+                                .padding(.horizontal)
+                                .padding(.trailing, 16)
+                                .padding(.leading, 16)
+                        })
+                    }
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationBarBackButtonHidden(true)
-            .navigationTitle("\(materia.nome)")
+            .navigationTitle(materia.nome)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigation) {
@@ -129,39 +142,30 @@ struct MateriaView : View {
             .sheet(isPresented: $ModalCriarTopico) {
                 ModalCriarTopicoView(materia: $materia)
                     .presentationDetents([.fraction(0.2)])
-                    
+            }
+            .sheet(isPresented: $ModalCriarConteudo) {
+                if let indice = indiceTopicoSelecionado {
+                    ModalCriarConteudoView(topico: $materia.topicos[indice])
+                        .presentationDetents([.fraction(0.2)])
+                }
             }
         }
-        .overlay {
-            if materia.topicos.isEmpty {
-                ContentUnavailableView(label: {
-                    HStack {
-                        Spacer()
-                        
-                        Image(systemName: "arrow.turn.right.up")
-                            .foregroundStyle(Color(hex: "D1D1D1"))
-                            .font(.system(size: 60))
-                            .offset(y: -210)
-                            .padding(.trailing, -27)
-                    }
-                    Label {
-                        Text("Que tal adicionarmos um conteúdo?")
-                            .fontWeight(.regular)
-                    } icon: {
-                        Image(systemName: "document.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 152, height: 115)
-                            .foregroundColor(Color(hex: "D1D1D1"))
-                        
-                        
-                    }
-                }, description: {
-                    Text("Clique no botão sinalizado para adicionar um novo conteúdo!")
-                        .padding(.horizontal)
-                        .padding(.trailing, 16)
-                        .padding(.leading, 16)
-                })
+    }
+}
+
+struct TopicosView: View {
+    @Binding var topico: Topico
+
+    var body: some View {
+        ForEach($topico.conteudos) { $conteudo in
+            NavigationLink(destination: ConteudoView(conteudo: $conteudo)) {
+                HStack {
+                    Image(systemName: "document.fill")
+                        .foregroundStyle(Color(hex: "00504C"))
+                        .font(.system(size: 17))
+                        .padding(.horizontal, 16)
+                    Text(conteudo.nome)
+                }
             }
         }
     }

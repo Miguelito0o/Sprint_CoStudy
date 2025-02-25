@@ -6,11 +6,11 @@
 //
 import SwiftUI
 
-struct ConteudoView : View {
+struct ConteudoView: View {
     
-    var topico: Topico
+    @Binding var conteudo : Conteudo
     
     var body: some View {
-        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
+        Text("Hello world")
     }
 }
