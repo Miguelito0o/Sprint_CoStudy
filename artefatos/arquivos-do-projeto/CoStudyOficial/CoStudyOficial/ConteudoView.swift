@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ConteudoView: View {
     
-    @Binding var conteudo : Conteudo
+    var conteudo : Conteudo
     
     var body: some View {
         Text("Hello world")

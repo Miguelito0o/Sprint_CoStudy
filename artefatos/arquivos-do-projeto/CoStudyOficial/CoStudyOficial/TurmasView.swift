@@ -111,7 +111,6 @@ struct TurmasView: View {
                     }
                 }
             }
-            //Overlay para quando não houver turmas
             .overlay {
                 if turmas.isEmpty {
                     ContentUnavailableView(label: {

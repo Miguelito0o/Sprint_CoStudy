@@ -35,7 +35,6 @@ struct MateriaView: View {
                     LazyVStack {
                         ForEach($materia.topicos) { $topico in
                             VStack {
-                                // Cabeçalho do tópico
                                 HStack {
                                     Text(topico.nome)
                                     Spacer()
@@ -158,13 +157,17 @@ struct TopicosView: View {
 
     var body: some View {
         ForEach($topico.conteudos) { $conteudo in
-            NavigationLink(destination: ConteudoView(conteudo: $conteudo)) {
-                HStack {
-                    Image(systemName: "document.fill")
-                        .foregroundStyle(Color(hex: "00504C"))
-                        .font(.system(size: 17))
-                        .padding(.horizontal, 16)
-                    Text(conteudo.nome)
+            NavigationLink(destination: ConteudoView(conteudo: conteudo)) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "document.fill")
+                            .foregroundStyle(Color(hex: "00504C"))
+                            .font(.system(size: 20))
+                            .padding(.horizontal, 16)
+                        Text(conteudo.nome)
+                            .foregroundStyle(Color(hex: "3C3C43"))
+                    }
+                    Divider().padding(.bottom, 8)
                 }
             }
         }
