@@ -12,6 +12,7 @@ struct MateriaView: View {
     @State private var indiceTopicoSelecionado: Int? = nil
     @State private var ModalCriarConteudo = false
     @State private var topicosEmExpansao: Set<UUID> = []
+    @State private var searchTerm: String = ""
     
     @Environment(\.dismiss) var dismiss
     
@@ -32,7 +33,13 @@ struct MateriaView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 ScrollView {
+                    if !materia.topicos.isEmpty {
+                        SearchBar(text: $searchTerm)
+                    }
                     LazyVStack {
+                        
+                        
+                        
                         ForEach($materia.topicos) { $topico in
                             VStack {
                                 HStack {

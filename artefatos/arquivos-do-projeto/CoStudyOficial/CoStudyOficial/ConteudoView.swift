@@ -7,25 +7,33 @@
 import SwiftUI
 
 struct ConteudoView: View {
-    
     var conteudo: Conteudo
     @Environment(\.dismiss) var dismiss
-    
-    @State private var paginaDeTexto: String
+
+    @State private var paginaDeTexto: String = ""
+
     init(conteudo: Conteudo) {
         self.conteudo = conteudo
-        _paginaDeTexto = State(initialValue: conteudo.paginaDeTexto)
+        let savedText = UserDefaults.standard.string(forKey: "paginaDeTexto_\(conteudo.id)")
+        _paginaDeTexto = State(initialValue: savedText ?? conteudo.paginaDeTexto)
     }
-    
+
     var body: some View {
-        ZStack {
-            //"Filtro" amarelo
+        let binding = Binding<String>(get: {
+            self.paginaDeTexto
+        }, set: {
+            self.paginaDeTexto = $0
+            UserDefaults.standard.set($0, forKey: "paginaDeTexto_\(conteudo.id)")
+        })
+
+        return ZStack {
             Color(hex: "FFFBEF")
                 .ignoresSafeArea(.all)
                 .allowsHitTesting(false)
+
             VStack {
-                ScrollView{
-                    TextField("Digite aqui...", text: $paginaDeTexto, axis: .vertical)
+                ScrollView {
+                    TextField("Digite aqui...", text: binding, axis: .vertical)
                 }
             }
             .frame(alignment: .topLeading)

@@ -29,6 +29,23 @@
 		226984DE2D5BBC270012AB03 /* CoStudyOficialUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoStudyOficialUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		223AF2502D70E4CA00183CCF /* Exceptions for "CoStudyOficialUITests" folder in "CoStudyOficial" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ConteudoViewModel.swift,
+			);
+			target = 226984C32D5BBC260012AB03 /* CoStudyOficial */;
+		};
+		223AF2512D70E4CA00183CCF /* Exceptions for "CoStudyOficialUITests" folder in "CoStudyOficialUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ConteudoViewModel.swift,
+			);
+			target = 226984DD2D5BBC270012AB03 /* CoStudyOficialUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		226984C62D5BBC260012AB03 /* CoStudyOficial */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -42,6 +59,10 @@
 		};
 		226984E12D5BBC270012AB03 /* CoStudyOficialUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				223AF2502D70E4CA00183CCF /* Exceptions for "CoStudyOficialUITests" folder in "CoStudyOficial" target */,
+				223AF2512D70E4CA00183CCF /* Exceptions for "CoStudyOficialUITests" folder in "CoStudyOficialUITests" target */,
+			);
 			path = CoStudyOficialUITests;
 			sourceTree = "<group>";
 		};
@@ -393,6 +414,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CoStudyOficial/Preview Content\"";
@@ -421,6 +443,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CoStudyOficial/Preview Content\"";

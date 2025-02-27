@@ -11,6 +11,7 @@ struct TurmaView: View {
     @Binding var turma: Turma
     @State private var ModalCriarMateria = false
     @State var ModalConfigurarMateria = false
+    @State private var searchTerm: String = ""
     
     @Environment(\.dismiss) var dismiss
     
@@ -37,6 +38,9 @@ struct TurmaView: View {
                 
                 
                 ScrollView {
+                    if !turma.materias.isEmpty {
+                        SearchBar(text: $searchTerm)
+                    }
                     LazyVStack {
                         ForEach($turma.materias, id: \.id) { $materia in
                             NavigationLink(destination: MateriaView(materia: $materia)) {
