@@ -111,6 +111,7 @@ struct ModalCriacaoDeMateriaView : View {
                                 adicionarMateria()
                                 dismiss()
                             }
+                            .disabled(nomeMateria.isEmpty)
                         }
                     }
             }

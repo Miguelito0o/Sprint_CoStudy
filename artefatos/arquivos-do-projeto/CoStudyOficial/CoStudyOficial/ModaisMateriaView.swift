@@ -49,6 +49,7 @@ struct ModalCriarTopicoView : View {
                             adicionarTopico()
                             dismiss()
                         }
+                        .disabled(nomeTopico.isEmpty)
                     }
                 }
             }

@@ -150,6 +150,7 @@ struct ModalEntrarTurmaView: View {
                                 }, label: {
                                     Text("Entrar")
                                 })
+                                .disabled(codigoDigitado.isEmpty)
                             }
                         }
                 }
@@ -209,6 +210,7 @@ struct ModalCriarTurmaView: View {
                                 }, label: {
                                     Text("Criar")
                                 })
+                                .disabled(nome.isEmpty)
                             }
                         }
                 }
@@ -347,6 +349,7 @@ struct ModalEditarTurmaView: View {
                         Button("Voltar") {
                             dismiss()
                         }
+                        .disabled(turma.nome.isEmpty)
                     }
                 }
             }

@@ -30,6 +30,11 @@ struct SearchBar: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar{
         let searchBar = UISearchBar(frame: .zero)
         searchBar.delegate = context.coordinator
+        
+        searchBar.backgroundImage = UIImage()
+        searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        searchBar.isTranslucent = true
+        
         return searchBar
     }
     

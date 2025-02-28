@@ -36,6 +36,9 @@ extension Color {
 
 struct ContentView: View {
     
+    @State private var selectedTab = 0
+    @State private var ModalPerfil = false
+    
     var body: some View {
         NavigationStack {
             TabView {
@@ -44,17 +47,28 @@ struct ContentView: View {
                     .tabItem {
                         Label("Turmas", systemImage: "rectangle.grid.1x2.fill")
                     }
+                    .tag(0)
+                
                 EventosView()
                     .tabItem {
                         Label("Eventos", systemImage: "bell.circle.fill")
                     }
+                    .tag(1)
                 
-                ProfileView()
+                Text("Perfil")
                     .tabItem {
                         Label("Perfil", systemImage: "person.crop.circle.fill")
                     }
+                    .tag(2)
+                    .onAppear {
+                        ModalPerfil = true
+                        selectedTab = 0
+                    }
             }
             .tint(Color(hex: "438B88"))
+            .sheet(isPresented: $ModalPerfil) {
+                PerfilView()
+            }
         }
     }
 }

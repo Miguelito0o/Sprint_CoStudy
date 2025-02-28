@@ -39,7 +39,13 @@ struct TurmaView: View {
                 
                 ScrollView {
                     if !turma.materias.isEmpty {
-                        SearchBar(text: $searchTerm)
+                        VStack {
+                            SearchBar(text: $searchTerm)
+                            FiltroSemanaView()
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 16)
+                        }
+                        .padding(.horizontal, 16)
                     }
                     LazyVStack {
                         ForEach($turma.materias, id: \.id) { $materia in
