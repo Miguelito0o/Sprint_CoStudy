@@ -55,20 +55,13 @@ struct ContentView: View {
                     }
                     .tag(1)
                 
-                Text("Perfil")
+                PerfilView()
                     .tabItem {
                         Label("Perfil", systemImage: "person.crop.circle.fill")
                     }
                     .tag(2)
-                    .onAppear {
-                        ModalPerfil = true
-                        selectedTab = 0
-                    }
             }
             .tint(Color(hex: "438B88"))
-            .sheet(isPresented: $ModalPerfil) {
-                PerfilView()
-            }
         }
     }
 }
